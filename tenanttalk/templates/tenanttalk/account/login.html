@@ -1,0 +1,35 @@
+{% extends "tenanttalk/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load socialaccount %}
+{% block content %}
+    <div class="content-section">
+        <br>
+        <h3>Login</h3>
+        <br>
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                {{ form.username|as_crispy_field }}
+                {{ form.password|as_crispy_field }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-light" type="submit">Login</button>
+                <br> <br>
+{#                {% provider_login_url 'google'%} #}
+
+                <a href="{% provider_login_url 'google' %}" class="btn btn-light">
+                    <i class="fab fa-google"></i>
+                    Login with Google
+                </a>
+
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Need An Account? <a class="ml-2" href="{% url 'signup' %}">Sign Up</a>
+            </small><br>
+        </div>
+        <br>
+    </div>
+{% endblock content %}

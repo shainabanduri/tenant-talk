@@ -1,0 +1,68 @@
+{% extends "tenanttalk/base.html" %}
+{% block content %}
+    <br>
+    <h3>My Account</h3>
+    <p>You are logged in as <b>{{ user.username }}</b></p>
+    <br>
+    <h3>My Reports</h3>
+    <br>
+
+    {% if items_page %}
+            {% for item in items_page %}
+                <div class="card" style="width: 40rem;">
+                    <div class="card-body">
+                    <h5 class="card-title">{{ item.post_title }} &nbsp;
+                        {% if item.status == "NEW" %}
+                            <div class="btn btn-sm btn-info disabled">New</div>
+                        {% endif %}
+
+                        {% if item.status == "IN_PROGRESS" %}
+                            <div class="btn btn-sm btn-danger disabled">In-Progress</div>
+                        {% endif %}
+
+                        {% if item.status == "RESOLVED" %}
+                            <div class="btn btn-sm btn-success disabled">Resolved</div>
+                        {% endif %}
+
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ item.building_address }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ item.landlord_name }}</h6>
+                    <br>
+
+                    <form method="post" action="{% url 'view_report' item.id %}">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-light" value="View Report">
+                    </form>
+                    </div>
+                </div>
+
+                <br>
+            {% endfor %}
+
+            {% if items_page.has_other_pages %}
+                <div class="btn-group" role="group">
+                    {% if items_page.has_previous %}
+                        <a href="?page={{ items_page.previous_page_number }}" class="btn btn-light">&laquo;</a>
+                    {% endif %}
+
+                    {% for page_number in items_page.paginator.page_range %}
+                        {% if items_page.number == page_number %}
+                            <button class="btn btn-light active">
+                                <div>{{ page_number }} <div class="sr-only">(current)</div></div>
+                            </button>
+                        {% else %}
+                            <a href="?page={{ page_number }}" class="btn btn-light">{{ page_number }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if items_page.has_next %}
+                        <a href="?page={{ items_page.next_page_number }}" class="btn btn-light">&raquo;</a>
+                    {% endif %}
+                </div>
+
+                <br>
+            {% endif %}
+    {% else %}
+        <p>No reports submitted by {{ user.username }}.</p>
+    {% endif %}
+{% endblock content %}

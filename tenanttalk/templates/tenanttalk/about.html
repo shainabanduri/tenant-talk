@@ -1,0 +1,77 @@
+{% extends "tenanttalk/base.html" %}
+{% load socialaccount %}
+
+{% block content %}
+<div class="container mt-4">  <!-- Ensure consistent spacing at the top -->
+    <div class="row">
+        <div class="col-2"> <!-- Empty column for spacing or layout -->
+        </div>
+
+        <div class="col-8"> <!-- Main content area -->
+            <br>
+            <h3>What is Tenant Talk?</h3>
+            <p>
+                A safe space for tenants to air grievances about their living situations or building!
+                As a whistleblowing web application, tenants can submit reports anonymously.
+                Our site administrators vet each report to determine its credibility, labeling them as either verified or not verified.
+            </p>
+            <br>
+            <div class="card"> <!-- Container for FAQ section -->
+                <div class="card-header">
+                    Frequently Asked Questions
+                </div>
+
+                <div class="card-body">
+                    <ol> <!-- Start of ordered list -->
+                        <li> <!-- Question 1 -->
+                            <h6>Why should tenants create an account?</h6>
+                            <p>
+                                While all reports are anonymous to the public, creating an account allows
+                                tenants to track the status of their submitted reports. The "My Account" page 
+                                shows whether a report is "New", "In Progress", or "Resolved". Additionally, 
+                                tenants will receive feedback on why their report was verified or not.
+                                The site administrator will be able to view the tenant's username.
+                            </p>
+                        </li>
+
+                        <li> <!-- Question 2 -->
+                            <h6>What is the difference between resolved and verified?</h6>
+                            <p>
+                                All reports are resolved after the site administrator either verifies or fails to verify
+                                the report submission. All resolved reports are available to review on "Home". On the
+                                other hand, not all reports are verified. If either no documents are attached or the
+                                proof is not sufficient, the site administrator will mark the report as "Not Verified",
+                                but will still appear on "Home".
+                            </p>
+                        </li>
+
+                        <!-- Additional questions, each wrapped in <li> -->
+                        <li>
+                            <h6>How do tenants submit a report?</h6>
+                            <p>
+                                Tenants can submit reports through "Submit Report".
+                                After submission, a site administrator reviews the report for its credibility and marks
+                                it as such.
+                            </p>
+                        </li>
+
+                        <!-- Add more questions and answers as needed -->
+                        <li> 
+                            <h6>Who can view attached files?</h6>
+                            <p>
+                                Because attached files can contain sensitive information about a user's personal information, 
+                                only the user that submitted the file and site administrator have viewing access. 
+                            </p>
+                        </li>    
+
+                    </ol>
+                </div> <!-- End of card-body -->
+            </div> <!-- End of card -->
+            <br><br>
+        </div>
+
+        <div class="col-1"> <!-- Empty column for spacing or layout -->
+        </div>
+    </div>
+</div>
+{% endblock content %}

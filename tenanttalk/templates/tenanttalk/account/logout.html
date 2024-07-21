@@ -1,0 +1,18 @@
+{% extends 'tenanttalk/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-5">
+                <div class="card-header"></div>
+                <div class="card-body text-center"> <!-- Center the content -->
+                    <h5>You have been logged out!</h5>
+                    <br>
+                    <a href="{% url 'home' %}" class="btn btn-light" style="text-decoration: none;">Back to Home</a> <!-- Remove underline and center the button -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

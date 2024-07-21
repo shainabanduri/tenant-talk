@@ -1,0 +1,11 @@
+{% extends "tenanttalk/base.html" %}
+{% load socialaccount %}
+{% block content %}
+<br>
+<h3>My Account</h3>
+<p>You are logged in as <b>{{ user.username }}</b> as a Django administrator</p>
+<br>
+<a class="btn btn-light" href="/admin">Administrator Site</a>
+<br><br>
+
+{% endblock content %}

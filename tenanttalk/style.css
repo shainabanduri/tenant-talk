@@ -1,0 +1,25 @@
+.navbar-text {
+    color: blue;
+    font-weight: 480;
+    font-size: 18pt;
+}
+
+#postsContainer {
+    width: 100%; 
+    overflow: auto; 
+}
+.report-card {
+    padding: 10px; 
+    margin-bottom: 20px; 
+}
+
+.report-card .card-header {
+   background-color:#7aceef; 
+}
+.report-card .card-header .h5 {
+    color: white; 
+}
+.report-card .card-body{
+    background-color: #ffffff;
+    
+}

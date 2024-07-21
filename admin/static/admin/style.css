@@ -1,0 +1,12 @@
+.navbar-text {
+    color: red;
+    font-weight: 480;
+    font-size: 18pt;
+}
+
+
+#staffInProgressReports{
+    overflow:scroll;
+    max-height: 150px;
+    border: 1px solid red;
+}

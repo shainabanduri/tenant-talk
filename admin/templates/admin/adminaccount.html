@@ -1,0 +1,15 @@
+{% extends "admin/adminbase.html" %}
+{% load socialaccount %}
+{% block content %}
+<h3>My Admin Account Info</h3>
+
+  <a href="{% provider_login_url 'google' %}">Manage account</a>
+
+{% if user.is_authenticated %}
+    <p>Welcome, You are logged in as {{ user.username }}</p>
+{% else %}
+    <p>Not logged in</p>
+{% endif %}
+
+
+{% endblock content %}

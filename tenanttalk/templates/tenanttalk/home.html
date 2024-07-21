@@ -1,0 +1,115 @@
+{% extends "tenanttalk/base.html" %}
+{% block content %}
+    <div class="row row-cols-md-2">
+        <div class="container" id="mapContainer">
+            <br>
+            <h3>What is Tenant Talk?</h3>
+            <p>
+                A safe space for tenants to air grievances about their living situations or building!
+                As a whistleblowing web application, tenants can submit reports anonymously.
+                Our site administrators vet each report to determine its credibility, labeling them as either verified or not verified.
+            </p>
+            <br>
+            <div class="card"> <!-- Container for FAQ section -->
+                <div class="card-header">
+                    Frequently Asked Questions
+                </div>
+
+                <div class="card-body">
+                    <ol> <!-- Start of ordered list -->
+                            <h6>Why should tenants create an account?</h6>
+
+                            <p>
+                                While all reports are anonymous to the public, creating an account allows
+                                tenants to track the status of their submitted reports. The "My Account" page 
+                                shows whether a report is "New", "In Progress", or "Resolved". Additionally, 
+                                tenants will receive feedback on why their report was verified or not.
+                                The site administrator will be able to view the tenant's username.
+                            </p>
+                            <h6>What is the difference between resolved and verified?</h6>
+                            <p>
+                                All reports are resolved after the site administrator either verifies or fails to verify
+                                the report submission. All resolved reports are available to review on "Home". On the
+                                other hand, not all reports are verified. If either no documents are attached or the
+                                proof is not sufficient, the site administrator will mark the report as "Not Verified",
+                                but will still appear on "Home".
+                            </p>
+
+
+                            <h6>How do tenants submit a report?</h6>
+                            <p>
+                                Tenants can submit reports through "Submit Report".
+                                After submission, a site administrator reviews the report for its credibility and marks
+                                it as such.
+                            </p>
+
+                            <h6>Who can view attached files?</h6>
+                            <p>
+                                Because attached files can contain sensitive personal information about a user,
+                                only the user that submitted the file and site administrator have viewing access. 
+                            </p>
+
+                        <!-- Add more questions and answers as needed -->
+                </div> <!-- End of card-body -->
+            </div> <!-- End of card -->
+            <br><br>
+        </div>
+        <div class="container" id="postsContainer">
+        <br>
+        {% if items_page %}
+            {% for item in items_page %}
+                <div class="card">
+                    <div class="card-body">
+                    <h5 class="card-title">{{ item.post_title }} &nbsp;
+                        {% if item.verify == "T" %}
+                            <div class="btn btn-sm btn-success disabled">Verified</div>
+                        {% endif %}
+                        {% if item.verify == "F" %}
+                            <div class="btn btn-sm btn-danger disabled">Not Verified</div>
+                        {% endif %}
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ item.building_address }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ item.landlord_name }}</h6>
+
+                    <br>
+
+                    <form method="post" action="{% url 'view_report' item.id %}">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-light" value="View Report">
+                    </form>
+                    </div>
+                </div>
+
+                <br>
+            {% endfor %}
+
+            {% if items_page.has_other_pages %}
+                <div class="btn-group" role="group">
+                    {% if items_page.has_previous %}
+                        <a href="?page={{ items_page.previous_page_number }}" class="btn btn-light">&laquo;</a>
+                    {% endif %}
+
+                    {% for page_number in items_page.paginator.page_range %}
+                        {% if items_page.number == page_number %}
+                            <button class="btn btn-light active">
+                                <div>{{ page_number }} <div class="sr-only">(current)</div></div>
+                            </button>
+                        {% else %}
+                            <a href="?page={{ page_number }}" class="btn btn-light">{{ page_number }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if items_page.has_next %}
+                        <a href="?page={{ items_page.next_page_number }}" class="btn btn-light">&raquo;</a>
+                    {% endif %}
+                </div>
+
+                <br>
+            {% endif %}
+        {% else %}
+            <p>No reports found.</p>
+        {% endif %}
+        
+        </div>
+    </div>
+{% endblock content %}

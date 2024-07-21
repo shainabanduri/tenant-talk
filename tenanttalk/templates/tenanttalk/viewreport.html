@@ -1,0 +1,127 @@
+{% extends "tenanttalk/base.html" %}
+{% load static %}
+
+{% block content %}
+    <br>
+    <a class="btn btn-light" href="javascript:window.history.back();">Back</a>
+    <br><br>
+    <h3>{{ report.post_title }}</h3>
+    <br>
+
+    <div class="card" style="width:40rem;">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">{{ report.building_address }}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">{{ report.landlord_name }}</h6>
+          <p class="card-text">{{ report.report }}</p>
+          {% if user.is_staff %}
+            <br>
+            {% if report.user == "ANONYMOUS" %}
+                <p>Submitted by <b>Anonymous</b> user</p>
+            {% else %}
+                <p>Submitted by <b>{{ report.user }}</b></p>
+            {% endif %}
+          {% endif %}
+        </div>
+    </div>
+
+    {% if user.is_staff %}
+        <br>
+        <div class="card" style="width:40rem;">
+            <div class="card-body">
+                <h6 class="card-title">Attached Files:</h6>
+                {% if files %}
+                    <ul>
+                        {% for file in files %}
+                            <iframe src="{{ file.url }}" style="width:100%; height:600px;" frameborder="0"></iframe>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No files uploaded.</p>
+                {% endif %}
+            </div>
+        </div>
+
+    {% if report.user != "ANONYMOUS" %}
+        {% if report.status == "RESOLVED" %}
+        {% if report.feedback %}
+        <br>
+        <div class="card" style="width:40rem;">
+            <div class="card-body">
+                <h6 class="card-title">Feedback:</h6>
+                    <p> {{ report.feedback }} </p>
+            </div>
+        </div>
+        {% endif %}
+        {% else %}
+        <br>
+        <div class="card" style="width:40rem;">
+            <div class="card-body">
+                <h6 class="card-title">Feedback:</h6>
+                {% if report.feedback %}
+                    <p>{{ report.feedback }}</p>
+                {% else %}
+                    <form id="feedbackForm" method="post">
+                        {% csrf_token %}
+                        <textarea id="feedback" name="feedback" rows="4" cols="50">{{ report.feedback }}</textarea>
+                        <br><br>
+                        <input type="submit" class="btn btn-light" value="Submit">
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        {% endif %}
+        
+        <!--<br>-->
+
+        {% if report.status != "RESOLVED" %}
+        <br>
+        <form id = "resolveForm" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <input class="btn btn-success" id ="resolve" name ="resolve" type="submit" value="Accept Verification" style="margin-left: 20px; margin-right: 30px;">
+                <input class="btn btn-danger" id ="unresolve" name ="unresolve" type="submit" value="Deny Verification">
+            </div>
+            
+        </form>
+        {% endif %}
+    {% endif %}
+
+    {% if user.username == report.user %}
+        {% if report.feedback %}
+        <br>
+            <div class="card" style="width:40rem;">
+                <div class="card-body">
+                    <h6 class="card-title">Feedback:</h6>
+                    <p>{{ report.feedback }}</p>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    {% if user.username == report.user %}
+        {% if user.is_staff %}
+        {% else %}
+            <br>
+            <div class="card" style="width:40rem;">
+                <div class="card-body">
+                    <h6 class="card-title">Attached Files:</h6>
+                    {% if files %}
+                        <ul>
+                            {% for file in files %}
+                                <iframe src="{{ file.url }}" style="width:100%; height:600px;" frameborder="0"></iframe>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No files uploaded.</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <br>
+
+
+{% endblock content %}
+

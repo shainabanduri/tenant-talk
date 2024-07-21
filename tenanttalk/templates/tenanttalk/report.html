@@ -1,0 +1,52 @@
+{% extends "tenanttalk/base.html" %}
+{% block content %}
+<br>
+<h3>Submit Report</h3>
+<br>
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="card card-body" style="width: 40rem;">
+        <label for="post_title">Title: (<i>Max 30 character limit.</i>)</label>
+            <input type="text" id="post_title" name="post_title" maxlength="30" required>
+        <br>
+
+        <label for="building_address">Building Address: (<i>Max 100 character limit.</i>)</label>
+            <input type="text" id="building_address" name="building_address" maxlength="100" required>
+        <br>
+
+        <label for="landlord_name">Landlord Name: (<i>Max 30 character limit.</i>)</label>
+            <input type="text" id="landlord_name" name="landlord_name" maxlength="30" required>
+        <br>
+
+        <label for="report">Report: (<i>Max 200 character limit.</i>)</label>
+            <textarea id="report" name="report" rows="6" cols="50" maxlength="200" required></textarea>
+        <br>
+    </div>
+
+    <br>
+
+    <div class="card" style="width: 40rem;">
+        <div class="card-body">
+            <h6 class="card-title">Attach File as Valid Proof of Report</h6>
+            <label for="pdf">Select PDF File: (<i>ex.</i> Proof of residence, Housing agreement)</label>
+            <input type="file" name="pdf" id="pdf" accept=".pdf">
+            <br> <br>
+
+            <label for="txt">Select TXT File: (<i>ex.</i> Housing lease, Record of emails)</label>
+            <input type="file" name="txt" id="txt" accept=".txt">
+            <br> <br>
+
+            <label for="jpg">Select JPG File: (<i>ex.</i> Photograph of claim, Screenshots of messages)</label>
+            <input type="file" name="jpg" id="jpg" accept=".jpg">
+
+        </div>
+
+    </div>
+    
+    <br>
+    
+    <input class="btn btn-light" type="submit" value="Submit">
+    
+</form>
+{% endblock content %}

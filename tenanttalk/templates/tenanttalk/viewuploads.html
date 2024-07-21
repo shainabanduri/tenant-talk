@@ -1,0 +1,9 @@
+{% extends "tenanttalk/staffbase.html" %}
+{% block content %}
+    <h1>List of all files</h1>
+    <ul>
+        {% for file in files %}
+            <li><a href="{{ file.url }}" target="_blank">{{ file.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

@@ -1,0 +1,76 @@
+{% extends "tenanttalk/base.html" %}
+{% load socialaccount %}
+{% block content %}
+    <br>
+    <h3>My Account</h3>
+    <p>You are logged in as <b>{{ user.username }}</b> as a site administrator. </p>
+    <br>
+    <h3>Reports Submitted</h3>
+    <br>
+
+    {% if staff_reports %}
+        <div class="row" style="margin-bottom: 10px;">
+            <!-- Using Bootstrap's grid system to align the buttons -->
+            <div class="col-auto">
+                <div class="btn btn-sm btn-info disabled" style="width: 100px; height: 30px;">New</div>
+            </div>
+            <div class="col-auto" style="margin-left: 440px;">
+                <div class="btn btn-sm btn-danger disabled" style="width: 100px; height: 30px;">In-Progress</div>
+            </div>
+        </div>
+        <div class="row">
+                <div class="col" id="staffInProgressReports" style="overflow-y:scroll; max-height: 500px">
+                {#<br><br>#}
+                    {% for report in staff_reports %}
+                        {% if report.status == 'NEW' %}
+                            <div class="card">
+                                <div class="card-body">
+                                <h5 class="card-title">{{ report.post_title }} &nbsp; </h5>
+                                <h6 class="card-subtitle mb-2 text-muted">{{ report.building_address }}</h6>
+                                <h6 class="card-subtitle mb-2 text-muted">{{ report.landlord_name }}</h6>
+                                <br>
+
+                                <form method="post" action="{% url 'view_report' report.id %}">
+                                    {% csrf_token %}
+                                    <input type="submit" class="btn btn-light" value="View Report">
+                                </form>
+                                </div>
+                            </div>
+
+                            <br>
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
+{#            <div class="container" >#}
+                <br><br> <br/><br/><br/>
+                <div class="col" id="staffInProgressReports" style="overflow-y:scroll; max-height: 500px">
+
+{#                    <br><br>#}
+                    {% for report in staff_reports %}
+                        {% if report.status == 'IN_PROGRESS' %}
+                            <div class="card">
+                                <div class="card-body">
+                                <h5 class="card-title">{{ report.post_title }} &nbsp; </h5>
+                                <h6 class="card-subtitle mb-2 text-muted">{{ report.building_address }}</h6>
+                                <h6 class="card-subtitle mb-2 text-muted">{{ report.landlord_name }}</h6>
+                                <br>
+
+                                <form method="post" action="{% url 'view_report' report.id %}">
+                                    {% csrf_token %}
+                                    <input type="submit" class="btn btn-light" value="View Report">
+                                </form>
+                                </div>
+                            </div>
+
+                            <br>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <br/><br/>
+{#        </div>#}
+    {% else %}
+        <p>No reports submitted.</p>
+    {% endif %}
+{% endblock content %}
